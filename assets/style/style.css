@@ -5,30 +5,44 @@
 body {
   margin: 0 auto;
   padding: 0 auto;
-  background-color: #292525;
   font-family: 'Exo 2', sans-serif;
 }
 
 
-header {
+.jumbotron {
   border: white 2px solid;
-  border-radius: 3rem;
-  padding: 10px;
-  margin: 10px;
+  /* border-radius: 3rem; */
+  /* padding: 10px;
+  margin: 10px; */
+  text-align: center;
 }
+/* 
+.container {
+  background-image: url("../image/tennis-ball.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: auto;
+  overflow: hidden;
+} */
 
 h1 {
-  color: #33ccff;
+  color: #abdbc1;
   text-transform: uppercase;
   text-align: center;
   padding: 10px;
-  margin: 10px;
-  font-size: 105px;
+  margin: 5px;
+  font-size: 75px;
 }
 
-h1 span {
+button {
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+}
+
+/* h1 span {
   color: #ff99cc;
-} 
+}  */
 
 #time-left {
   color: white;
