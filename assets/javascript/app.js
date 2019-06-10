@@ -66,7 +66,7 @@ var inteveralID;
 var score = 0;
 var incorrect = 0;
 // variable to hold the index of current question 
-var questionIndex = 0;
+var questionIndex;
 // arrary for user's answers
 var userAns = [];
 // function to render questions 
@@ -118,7 +118,7 @@ function timeLeft() {
 
 
 function displayQuestion() {
-  questionIndex = i;
+  // questionIndex = i;
   var newInput = $('<h4>');
 
   newInput.text(tennisQuestions[questionIndex].question);
@@ -129,7 +129,7 @@ function displayQuestion() {
   // display answers 
 
   var inputA = $('<h6>');
-  inputA.html(tennisQuestions[questionIndex].answers.a);
+  inputA.text(tennisQuestions[questionIndex].answers.a);
   $("#answerOptions").append(inputA);
   inputA.attr('id', 'a');
   inputA.val('a');
@@ -137,19 +137,19 @@ function displayQuestion() {
 
 
   var inputB = $('<h6>');
-  inputB.html(tennisQuestions[questionIndex].answers.b);
+  inputB.text(tennisQuestions[questionIndex].answers.b);
   $("#answerOptions").append(inputB);
   inputB.attr('id', 'b');
   inputB.val('b');
 
-  var inputC = $('<h6>';
-  inputC.html(tennisQuestions[questionIndex].answers.c);
+  var inputC = $('<h6>');
+  inputC.text(tennisQuestions[questionIndex].answers.c);
   $("#answerOptions").append(inputC);
   inputC.attr('id', 'c');
   inputC.val('c');
 
   var inputD = $('<h6>');
-  inputD.html(tennisQuestions[questionIndex].answers.d);
+  inputD.text(tennisQuestions[questionIndex].answers.d);
   $("#answerOptions").append(inputD);
   inputD.attr('id', 'd');
   inputD.val('d');
@@ -202,7 +202,7 @@ function checkAnswer() {
 
 // start game 
 
-$("#start-button").on("click", function () {
+$("#start").on("click", function () {
 
   displayQuestion();
   timeLeft();
