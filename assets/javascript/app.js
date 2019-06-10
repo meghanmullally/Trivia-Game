@@ -1,44 +1,207 @@
+// Trivia Questions 
+var tennisQuestions = [{
+    qID: 1,
+    question: "How many Grand Slams doeo Rodger Federe have?",
+    answers: {
+      a: 8, 
+      b: 15,
+      c: 23,
+      d: 20
+    },
+    // images: [""],
+    validAnswer: "d"
+  },
+  {
+    qID: 2,
+    question: "How sets are in a tennis match?",
+    answers: {
+      a: 4,
+      b: 3,
+      c: 2,
+      d: 5 
+    },
+    // images: [""],
+    validAnswer: "b"
+
+  },
+  {
+    qID: 3,
+    question: "How many French Opens has Rafa Nadal won?",
+    answers: {
+      a: 8,
+      b: 10,
+      c: 2,
+      d: 5 
+    },
+    // images: [""],
+    validAnswer: "b"
+
+  },
+  {
+    qID: 4,
+    question: "What was Andy Murray's highest ranking?",
+    answers: {
+      a: 3,
+      b: 5,
+      c: 1,
+      d: 10
+    },
+    // images: [""],
+    validAnswer: "c"
+  },
+  {
+    qID: 5,
+    question: "Where is Novak Djokovic from?",
+    answers: {
+      a: "Monico",
+      b: "Serbia",
+      c: "Bulgaria",
+      d: "Romania"
+    },
+    // images: [""],
+    validAnswer: "b"
+  }
+
+];
+
+
+// Declaring variables 
+
+var inteveralID;
+var score = 0;
+var incorrect = 0;
+// variable to hold the index of current question 
+var questionIndex = 0;
+// arrary for user's answers
+var userAns = [];
+// function to render questions 
+var i = 0;
+
+
 $(document).ready(function () {
 
-  // Declaring variables 
+  $("#reset").on("click", function(){
+    score = 0;
+    location.reload();
 
-  var userPick = [];
+  });
 
-  var correct = 0;
-  var incorrect = 0;
-  var missed = 0;
-  var questionCounter = 0;
-  var images;
+});
 
-  var triviaQuestions = [{
+function setTimer(){
+  $("#score").empty();
 
-      question: "How many Grand Slams doeo Rodger Federe have?",
-      choices: [8, 15, 23, 20],
-      images: [""],
-      validAnswer: 3
-    },
-    {
-      question: "How sets are in a tennis match?",
-      choices: [4, 3, 2, 5],
-      images: [""],
-      validAnswer: 1
 
-    },
-    {
-      question: "How many French Opens has Rafa Nadal won?",
-      choices: [8, 10, 2, 5],
-      images: [""],
-      validAnswer: 1
+  clearInterval(inteveralID);
+  var thirtySeconds = 1000 * 30;
+  display = document.querySelector("#time-left");
+  displayQuestion(i);
+  startTimer(thirtySeconds, display);
+}
 
-    },
-    {
-      question: "What was Andy Murray's highest ranking?",
-      choices: [3, 5, 1, 10],
-      images: [""],
-      validAnswer: 2
-    }
+  // Set timer 
+function timeLeft(){
 
-  ];
+var time = $("#time-left")
+
+var timerID = setInterval(countdown, 1000);
+
+function countdown(){
+  if (timeLeft == -1){
+    clearTimeout(timerID);
+  }
+  else {
+    time.innerHtml = timeLeft + "seconds remaining";
+    timeLeft--;
+  }
+}
+
+    console.log("done");
+    $("#time-left").append("<h2>Time's Up!</h2>");
+    console.log("time is up");
+
+  };
+
+
+function displayQuestion() {
+  questionIndex = i;
+  var newInput = $("<h4>");
+  newInput.html(tennisQuestions[questionIndex].question);
+  $("#questions").append(newInput);
+
+// display answers 
+ 
+var inputA = $("<h6>");
+inputA.html(tennisQuestions[questionIndex].answers.a);
+$("#answerOptions").append(inputA);
+inputA.attr('id', 'a');
+inputA.val('a');
+
+
+
+var inputB = $("<h6>");
+inputB.html(tennisQuestions[questionIndex].answers.b);
+$("#answerOptions").append(inputB);
+inputB.attr('id', 'b');
+inputB.val('b');
+
+var inputC = $("<h6>");
+inputC.html(tennisQuestions[questionIndex].answers.c);
+$("#answerOptions").append(inputC);
+inputC.attr('id', 'c');
+inputC.val('c');
+
+var inputD = $("<h6>");
+inputD.html(tennisQuestions[questionIndex].answers.d);
+$("#answerOptions").append(inputD);
+inputD.attr('id', 'd');
+inputD.val('d');
+
+
+$("#answerOptions h6").on("click", function(){
+  var optionID = $(this).attr('id')
+  console.log("id is " + optionID);
+  userAns = $("#" + optionID).val();
+  console.log("inside click " + userAns);
+  checkAnswer();
+});
+  
+}
+
+function checkAnswer(){
+if (userAns === tennisQuestions[questionIndex].validAnswer){
+  score++;
+
+}
+else if (userAns !== tennisQuestions[questionIndex].validAnswer){
+  incorrect--;
+};
+
+$("#questions").empty();
+$("#answerOptions").empty();
+clearInterval(inteveralID);
+
+
+var questionValidAns = '';
+if (tennisQuestions[questionIndex].validAnswer === 'a') {
+  questionValidAns = tennisQuestions[questionIndex].answers.a;
+} else if (tennisQuestions[questionIndex].correctAnswer === 'b') {
+  questionValidAns = tennisQuestions[questionIndex].answers.b;
+} else if (tennisQuestions[questionIndex].correctAnswer === 'c') {
+  questionValidAns = tennisQuestions[questionIndex].answers.c;
+} else if (tennisQuestions[questionIndex].correctAnswer === 'd') {
+  questionValidAns = tennisQuestions[questionIndex].answers.d;
+}
+
+if (score > 0) {
+  $("#score").html("Correct!");
+}
+else if (incorrect > 0) {
+  $("#score").html("Incorrect!");
+}
+
+
+};
 
 
   // start game 
@@ -46,28 +209,7 @@ $(document).ready(function () {
   $("#start-button").on("click", function () {
     
 
-  })
-
-  $("#time-left").append()
-  setTimeout(function () {
-   // Set timer 
-
-   // after 30 seconds, execute timeUP
-
-   setTimeout(timeUp, 1000 * 30);
 
 
-   function timeUp() {
-     // in the element with an id of time-left add an h2 saying Time's Up!
-     // console log done
-     console.log("done");
-     $("#time-left").append("<h2>Time's Up!</h2>");
-     console.log("time is up");
+    })
 
-   }
-
- })
-
-
-
-})
