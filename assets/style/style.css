@@ -13,13 +13,16 @@ body {
   background-position: center; 
 }
 
-.triviaContainer {
+#triviaContainer {
   position: relative;
   height: 340px;
-  margin-top: 35px;
+  margin-top: 15px;
+  border: solid 2px white;
+  margin: 40px;
 }
 
-.slide {
+
+/* .slide {
   position: absolute;
   left: 0px;
   top: 0px;
@@ -30,7 +33,7 @@ body {
 .active-slide {
   opacity: 1;
   z-index: 1;
-}
+} */
 
 h1 {
   color: #abdbc1;
@@ -50,7 +53,7 @@ button {
 }
 
 .question, .answer {
-  font-size: 35px;
+  font-size: 25px;
   margin: 20px;
 }
 
@@ -62,6 +65,6 @@ button {
 }
 
 #submit {
-  position: fixed;
+  position: relative;
   bottom: 0;
 }

@@ -1,25 +1,22 @@
 // declaring variables
 
- // store the html layout 
- var displayTrivia = [];
+// store the html layout 
+var displayTrivia = [];
+
+  // arrary for user Answers  
+  var userAns = [];
+  var answers = [];
+
+// user's correct answers 
+var correct = 0;
+var incorrect = 0;
 
 
-    // user's correct answers 
-    var correct = 0;
-    var incorrect = 0;
+var triviaContainer = document.getElementById("triviaContainer");
+var resultsContainer = document.getElementById("results");
 
+var submitButton = document.getElementById("submit");
 
-  var triviaContainer = document.getElementById("trivia");
-  var resultsContainer = document.getElementById("results");
-  var submitButton = document.getElementById("submit");
-
-
-  // next buttons 
-  var previousButton = document.getElementById("previous");
-
-  var nextButton = document.getElementById("next");
-  var slides = document.querySelectorAll(".slides");
-  var currentSlide = 0;
 
 
 
@@ -89,38 +86,38 @@ $(document).ready(function () {
 
     // store the html layout 
     var displayTrivia = [];
-
+    var answers = [];
 
     tennisQuestions.forEach((currentQuestion, questionNumb) => {
 
-      // arrary for user Answers  
-      var answers = [];
-      // var userAns = [];
+  
+     
 
       for (letter in tennisQuestions.answers) {
         // create radio button
         answers.push(
-          `<label><input type="radio" name="question${questionNumb}" value="${letter}"> ${letter} : ${currentQuestion.answers[letter]}</label>`
+          `<label><input type="radio" name="question${questionNumb}" value="${letter}"> ${letter}: ${currentQuestion.answers[letter]}</label>`
         );
       }
 
       // add question and answer to the trivia display 
       displayTrivia.push(
-        `<div class="slide><div class="question">${currentQuestion.question}</div>
-  <div class="answers"> ${answers.join("")} </div></div>`
+        `<div class="slide"><div class="question">${currentQuestion.question}</div>
+  <div class="answers"> ${answers.join("")}</div></div>`
       );
 
     });
 
-    triviaContainer.innerHTML = displayTrivia.join("");
 
+
+    document.getElementById("triviaContainer").innerHTML = displayTrivia.join("");;
 
   }
 
 
   function showResults() {
 
-    var answerContainer = triviaContainer.querySelectorAll(".answers");
+    var answers = triviaContainer.getElementById("answer");
 
     // user's correct answers 
     var correct = 0;
@@ -129,9 +126,9 @@ $(document).ready(function () {
     // for each question 
 
     tennisQuestions.forEach((currentQuestion, questionNumb) => {
-      var answerContainer = answerContainer[questionNumb];
+      var answers = answers[questionNumb];
       var selector = `input[name=question${questionNumb}]:checked`;
-      var userAns = (answerContainer.querySelectorAll(selector) || {}).value;
+      var userAns = (answers.getElementById(selector) || {}).value;
 
 
       // if the user answers correctly 
@@ -147,60 +144,20 @@ $(document).ready(function () {
     });
 
     resultsContainer.innerHTML = `${correct} out of ${tennisQuestions.length}`;
+    resultsContainer.innerHTML = `${incorrect} out of ${tennisQuestions.length}`;
 
   };
-
-
-  function showSlide(s) {
-    slides[currentSlide].classList.remove("active-slide");
-    slides[s].classList.add("active-slide");
-    currentSlide = s;
-
-    if (currentSlide === 0) {
-      previousButton.style.display = "none";
-    } else {
-      previousButton.style.display = "inline-block";
-    }
-
-    if (currentSlide === slides.length - 1) {
-      nextButton.style.display = "none";
-      submitButton.style.display = "inline-block";
-    } else {
-      nextButton.style.display = "inline-block";
-      submitButton.style.display = "none";
-    }
-  }
-
-  function showNextSlide() {
-    showSlide(currentSlide + 1);
-  }
-
-  function showPreviousSlide() {
-    showSlide(currentSlide - 1);
-  }
 
   //display the trivia game
 
   createTrivia();
 
-
   var triviaContainer = document.getElementById("trivia");
   var resultsContainer = document.getElementById("results");
   var submitButton = document.getElementById("submit");
+  // var answerContainer = document.getElementById("answer");
 
 
-  // next buttons 
-  var previousButton = document.getElementById("previous");
-
-  var nextButton = document.getElementById("next");
-  var slides = document.querySelectorAll(".slides");
-  var currentSlide = 0;
-
-
-  // submit show the results
-  submitButton.addEventListener("click", showResults);
-  previousButton.addEventListener("click", showPreviousSlide);
-  nextButton.addEventListener("click", showNextSlide);
 
 
 });
