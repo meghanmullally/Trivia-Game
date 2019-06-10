@@ -1,210 +1,206 @@
-// Trivia Questions 
-var tennisQuestions = [{
-    qID: 1,
-    question: "How many Grand Slams doeo Rodger Federe have?",
-    answers: {
-      a: 8,
-      b: 15,
-      c: 23,
-      d: 20
-    },
-    validAnswer: "d"
-  },
-  {
-    qID: 2,
-    question: "How sets are in a tennis match?",
-    answers: {
-      a: 4,
-      b: 3,
-      c: 2,
-      d: 5
-    },
-    validAnswer: "b"
+// declaring variables
 
-  },
-  {
-    qID: 3,
-    question: "How many French Opens has Rafa Nadal won?",
-    answers: {
-      a: 8,
-      b: 10,
-      c: 2,
-      d: 5
-    },
-    validAnswer: "b"
-
-  },
-  {
-    qID: 4,
-    question: "What was Andy Murray's highest ranking?",
-    answers: {
-      a: 3,
-      b: 5,
-      c: 1,
-      d: 10
-    },
-    validAnswer: "c"
-  },
-  {
-    qID: 5,
-    question: "Where is Novak Djokovic from?",
-    answers: {
-      a: "Monico",
-      b: "Serbia",
-      c: "Bulgaria",
-      d: "Romania"
-    },
-    validAnswer: "b"
-  }
-
-];
+ // store the html layout 
+ var displayTrivia = [];
 
 
-// Declaring variables 
+    // user's correct answers 
+    var correct = 0;
+    var incorrect = 0;
 
-var inteveralID;
-var score = 0;
-var incorrect = 0;
-// variable to hold the index of current question 
-var questionIndex;
-// arrary for user's answers
-var userAns = [];
-// function to render questions 
-var i = 0;
+
+  var triviaContainer = document.getElementById("trivia");
+  var resultsContainer = document.getElementById("results");
+  var submitButton = document.getElementById("submit");
+
+
+  // next buttons 
+  var previousButton = document.getElementById("previous");
+
+  var nextButton = document.getElementById("next");
+  var slides = document.querySelectorAll(".slides");
+  var currentSlide = 0;
+
 
 
 $(document).ready(function () {
 
-  $("#reset").on("click", function () {
-    score = 0;
-    location.reload();
+  // Trivia Questions 
+  var tennisQuestions = [{
+      question: "How many Grand Slams doeo Rodger Federe have?",
+      answers: {
+        a: 8,
+        b: 15,
+        c: 23,
+        d: 20
+      },
+      correctAnswer: "d"
+    },
+    {
 
-  });
+      question: "How sets are in a tennis match?",
+      answers: {
+        a: 4,
+        b: 3,
+        c: 2,
+        d: 5
+      },
+      correctAnswer: "b"
 
-});
+    },
+    {
+      question: "How many French Opens has Rafa Nadal won?",
+      answers: {
+        a: 8,
+        b: 10,
+        c: 2,
+        d: 5
+      },
+      correctAnswer: "b"
 
-function setTimer() {
-  $("#score").empty();
+    },
+    {
+
+      question: "What was Andy Murray's highest ranking?",
+      answers: {
+        a: 3,
+        b: 5,
+        c: 1,
+        d: 10
+      },
+      correctAnswer: "c"
+    },
+    {
+      question: "Where is Novak Djokovic from?",
+      answers: {
+        a: "Monico",
+        b: "Serbia",
+        c: "Bulgaria",
+        d: "Romania"
+      },
+      correctAnswer: "b"
+    }
+
+  ];
 
 
-  clearInterval(inteveralID);
-  var thirtySeconds = 1000 * 30;
-  display = document.querySelector("#time-left");
-  displayQuestion(i);
-  startTimer(thirtySeconds, display);
-}
 
-// Set timer 
-function timeLeft() {
+  function createTrivia() {
 
-  var time = $("#time-left")
+    // store the html layout 
+    var displayTrivia = [];
 
-  var timerID = setInterval(countdown, 1000);
 
-  function countdown() {
-    if (timeLeft == -1) {
-      clearTimeout(timerID);
+    tennisQuestions.forEach((currentQuestion, questionNumb) => {
+
+      // arrary for user Answers  
+      var answers = [];
+      // var userAns = [];
+
+      for (letter in tennisQuestions.answers) {
+        // create radio button
+        answers.push(
+          `<label><input type="radio" name="question${questionNumb}" value="${letter}"> ${letter} : ${currentQuestion.answers[letter]}</label>`
+        );
+      }
+
+      // add question and answer to the trivia display 
+      displayTrivia.push(
+        `<div class="slide><div class="question">${currentQuestion.question}</div>
+  <div class="answers"> ${answers.join("")} </div></div>`
+      );
+
+    });
+
+    triviaContainer.innerHTML = displayTrivia.join("");
+
+
+  }
+
+
+  function showResults() {
+
+    var answerContainer = triviaContainer.querySelectorAll(".answers");
+
+    // user's correct answers 
+    var correct = 0;
+    var incorrect = 0;
+
+    // for each question 
+
+    tennisQuestions.forEach((currentQuestion, questionNumb) => {
+      var answerContainer = answerContainer[questionNumb];
+      var selector = `input[name=question${questionNumb}]:checked`;
+      var userAns = (answerContainer.querySelectorAll(selector) || {}).value;
+
+
+      // if the user answers correctly 
+
+      if (userAns === currentQuestion.correctAnswer) {
+        correct++;
+      } else if (userAns !== currentQuestion.correctAnswer) {
+        // if the answer is incorrect 
+        incorrect++;
+      };
+
+
+    });
+
+    resultsContainer.innerHTML = `${correct} out of ${tennisQuestions.length}`;
+
+  };
+
+
+  function showSlide(s) {
+    slides[currentSlide].classList.remove("active-slide");
+    slides[s].classList.add("active-slide");
+    currentSlide = s;
+
+    if (currentSlide === 0) {
+      previousButton.style.display = "none";
     } else {
-      time.innerHtml = timeLeft + "seconds remaining";
-      timeLeft--;
+      previousButton.style.display = "inline-block";
+    }
+
+    if (currentSlide === slides.length - 1) {
+      nextButton.style.display = "none";
+      submitButton.style.display = "inline-block";
+    } else {
+      nextButton.style.display = "inline-block";
+      submitButton.style.display = "none";
     }
   }
 
-  console.log("done");
-  $("#time-left").append("<h2>Time's Up!</h2>");
-  console.log("time is up");
-
-};
-
-
-function displayQuestion() {
-  // questionIndex = i;
-  var newInput = $('<h4>');
-
-  newInput.text(tennisQuestions[questionIndex].question);
-
-  // newInput.html(tennisQuestions[questionIndex].question);
-  $("#questions").append(newInput);
-
-  // display answers 
-
-  var inputA = $('<h6>');
-  inputA.text(tennisQuestions[questionIndex].answers.a);
-  $("#answerOptions").append(inputA);
-  inputA.attr('id', 'a');
-  inputA.val('a');
-
-
-
-  var inputB = $('<h6>');
-  inputB.text(tennisQuestions[questionIndex].answers.b);
-  $("#answerOptions").append(inputB);
-  inputB.attr('id', 'b');
-  inputB.val('b');
-
-  var inputC = $('<h6>');
-  inputC.text(tennisQuestions[questionIndex].answers.c);
-  $("#answerOptions").append(inputC);
-  inputC.attr('id', 'c');
-  inputC.val('c');
-
-  var inputD = $('<h6>');
-  inputD.text(tennisQuestions[questionIndex].answers.d);
-  $("#answerOptions").append(inputD);
-  inputD.attr('id', 'd');
-  inputD.val('d');
-
-
-  $("#answerOptions h6").on("click", function () {
-    var optionID = $(this).attr('id')
-    console.log("id is " + optionID);
-    userAns = $("#" + optionID).val();
-    console.log("inside click " + userAns);
-    checkAnswer();
-  });
-
-}
-
-function checkAnswer() {
-  if (userAns === tennisQuestions[questionIndex].validAnswer) {
-    score++;
-
-  } else if (userAns !== tennisQuestions[questionIndex].validAnswer) {
-    incorrect--;
-  };
-
-  $("#questions").empty();
-  $("#answerOptions").empty();
-  clearInterval(inteveralID);
-
-
-  var questionValidAns = '';
-  if (tennisQuestions[questionIndex].validAnswer === 'a') {
-    questionValidAns = tennisQuestions[questionIndex].answers.a;
-  } else if (tennisQuestions[questionIndex].correctAnswer === 'b') {
-    questionValidAns = tennisQuestions[questionIndex].answers.b;
-  } else if (tennisQuestions[questionIndex].correctAnswer === 'c') {
-    questionValidAns = tennisQuestions[questionIndex].answers.c;
-  } else if (tennisQuestions[questionIndex].correctAnswer === 'd') {
-    questionValidAns = tennisQuestions[questionIndex].answers.d;
+  function showNextSlide() {
+    showSlide(currentSlide + 1);
   }
 
-  if (score > 0) {
-    $("#score").html("Correct!");
-  } else if (incorrect > 0) {
-    $("#score").html("Incorrect!");
+  function showPreviousSlide() {
+    showSlide(currentSlide - 1);
   }
 
+  //display the trivia game
 
-};
+  createTrivia();
 
 
+  var triviaContainer = document.getElementById("trivia");
+  var resultsContainer = document.getElementById("results");
+  var submitButton = document.getElementById("submit");
 
-// start game 
 
-$("#start").on("click", function () {
+  // next buttons 
+  var previousButton = document.getElementById("previous");
 
-  displayQuestion();
-  timeLeft();
+  var nextButton = document.getElementById("next");
+  var slides = document.querySelectorAll(".slides");
+  var currentSlide = 0;
+
+
+  // submit show the results
+  submitButton.addEventListener("click", showResults);
+  previousButton.addEventListener("click", showPreviousSlide);
+  nextButton.addEventListener("click", showNextSlide);
+
 
 });

@@ -13,15 +13,24 @@ body {
   background-position: center; 
 }
 
+.triviaContainer {
+  position: relative;
+  height: 340px;
+  margin-top: 35px;
+}
 
-/* .jumbotron {
-  border: white 2px solid;
-  /* border-radius: 3rem; */
-/* padding: 10px;
-  margin: 10px; */
-/* text-align: center;
-} */
+.slide {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: 1;
+  opacity: 0;
+}
 
+.active-slide {
+  opacity: 1;
+  z-index: 1;
+}
 
 h1 {
   color: #abdbc1;
@@ -40,12 +49,19 @@ button {
   text-align: center;
 }
 
-/* h1 span {
-  color: #ff99cc;
-}  */
+.question, .answer {
+  font-size: 35px;
+  margin: 20px;
+}
+
 
 #time-left {
   color: white;
   font-size: 24px;
   text-align: center;
+}
+
+#submit {
+  position: fixed;
+  bottom: 0;
 }
