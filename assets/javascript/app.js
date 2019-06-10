@@ -3,12 +3,11 @@ var tennisQuestions = [{
     qID: 1,
     question: "How many Grand Slams doeo Rodger Federe have?",
     answers: {
-      a: 8, 
+      a: 8,
       b: 15,
       c: 23,
       d: 20
     },
-    // images: [""],
     validAnswer: "d"
   },
   {
@@ -18,9 +17,8 @@ var tennisQuestions = [{
       a: 4,
       b: 3,
       c: 2,
-      d: 5 
+      d: 5
     },
-    // images: [""],
     validAnswer: "b"
 
   },
@@ -31,9 +29,8 @@ var tennisQuestions = [{
       a: 8,
       b: 10,
       c: 2,
-      d: 5 
+      d: 5
     },
-    // images: [""],
     validAnswer: "b"
 
   },
@@ -46,7 +43,6 @@ var tennisQuestions = [{
       c: 1,
       d: 10
     },
-    // images: [""],
     validAnswer: "c"
   },
   {
@@ -58,7 +54,6 @@ var tennisQuestions = [{
       c: "Bulgaria",
       d: "Romania"
     },
-    // images: [""],
     validAnswer: "b"
   }
 
@@ -80,7 +75,7 @@ var i = 0;
 
 $(document).ready(function () {
 
-  $("#reset").on("click", function(){
+  $("#reset").on("click", function () {
     score = 0;
     location.reload();
 
@@ -88,7 +83,7 @@ $(document).ready(function () {
 
 });
 
-function setTimer(){
+function setTimer() {
   $("#score").empty();
 
 
@@ -99,117 +94,117 @@ function setTimer(){
   startTimer(thirtySeconds, display);
 }
 
-  // Set timer 
-function timeLeft(){
+// Set timer 
+function timeLeft() {
 
-var time = $("#time-left")
+  var time = $("#time-left")
 
-var timerID = setInterval(countdown, 1000);
+  var timerID = setInterval(countdown, 1000);
 
-function countdown(){
-  if (timeLeft == -1){
-    clearTimeout(timerID);
+  function countdown() {
+    if (timeLeft == -1) {
+      clearTimeout(timerID);
+    } else {
+      time.innerHtml = timeLeft + "seconds remaining";
+      timeLeft--;
+    }
   }
-  else {
-    time.innerHtml = timeLeft + "seconds remaining";
-    timeLeft--;
-  }
-}
 
-    console.log("done");
-    $("#time-left").append("<h2>Time's Up!</h2>");
-    console.log("time is up");
+  console.log("done");
+  $("#time-left").append("<h2>Time's Up!</h2>");
+  console.log("time is up");
 
-  };
+};
 
 
 function displayQuestion() {
   questionIndex = i;
-  var newInput = $("<h4>");
-  newInput.html(tennisQuestions[questionIndex].question);
+  var newInput = $('<h4>');
+
+  newInput.text(tennisQuestions[questionIndex].question);
+
+  // newInput.html(tennisQuestions[questionIndex].question);
   $("#questions").append(newInput);
 
-// display answers 
- 
-var inputA = $("<h6>");
-inputA.html(tennisQuestions[questionIndex].answers.a);
-$("#answerOptions").append(inputA);
-inputA.attr('id', 'a');
-inputA.val('a');
+  // display answers 
+
+  var inputA = $('<h6>');
+  inputA.html(tennisQuestions[questionIndex].answers.a);
+  $("#answerOptions").append(inputA);
+  inputA.attr('id', 'a');
+  inputA.val('a');
 
 
 
-var inputB = $("<h6>");
-inputB.html(tennisQuestions[questionIndex].answers.b);
-$("#answerOptions").append(inputB);
-inputB.attr('id', 'b');
-inputB.val('b');
+  var inputB = $('<h6>');
+  inputB.html(tennisQuestions[questionIndex].answers.b);
+  $("#answerOptions").append(inputB);
+  inputB.attr('id', 'b');
+  inputB.val('b');
 
-var inputC = $("<h6>");
-inputC.html(tennisQuestions[questionIndex].answers.c);
-$("#answerOptions").append(inputC);
-inputC.attr('id', 'c');
-inputC.val('c');
+  var inputC = $('<h6>';
+  inputC.html(tennisQuestions[questionIndex].answers.c);
+  $("#answerOptions").append(inputC);
+  inputC.attr('id', 'c');
+  inputC.val('c');
 
-var inputD = $("<h6>");
-inputD.html(tennisQuestions[questionIndex].answers.d);
-$("#answerOptions").append(inputD);
-inputD.attr('id', 'd');
-inputD.val('d');
+  var inputD = $('<h6>');
+  inputD.html(tennisQuestions[questionIndex].answers.d);
+  $("#answerOptions").append(inputD);
+  inputD.attr('id', 'd');
+  inputD.val('d');
 
 
-$("#answerOptions h6").on("click", function(){
-  var optionID = $(this).attr('id')
-  console.log("id is " + optionID);
-  userAns = $("#" + optionID).val();
-  console.log("inside click " + userAns);
-  checkAnswer();
+  $("#answerOptions h6").on("click", function () {
+    var optionID = $(this).attr('id')
+    console.log("id is " + optionID);
+    userAns = $("#" + optionID).val();
+    console.log("inside click " + userAns);
+    checkAnswer();
+  });
+
+}
+
+function checkAnswer() {
+  if (userAns === tennisQuestions[questionIndex].validAnswer) {
+    score++;
+
+  } else if (userAns !== tennisQuestions[questionIndex].validAnswer) {
+    incorrect--;
+  };
+
+  $("#questions").empty();
+  $("#answerOptions").empty();
+  clearInterval(inteveralID);
+
+
+  var questionValidAns = '';
+  if (tennisQuestions[questionIndex].validAnswer === 'a') {
+    questionValidAns = tennisQuestions[questionIndex].answers.a;
+  } else if (tennisQuestions[questionIndex].correctAnswer === 'b') {
+    questionValidAns = tennisQuestions[questionIndex].answers.b;
+  } else if (tennisQuestions[questionIndex].correctAnswer === 'c') {
+    questionValidAns = tennisQuestions[questionIndex].answers.c;
+  } else if (tennisQuestions[questionIndex].correctAnswer === 'd') {
+    questionValidAns = tennisQuestions[questionIndex].answers.d;
+  }
+
+  if (score > 0) {
+    $("#score").html("Correct!");
+  } else if (incorrect > 0) {
+    $("#score").html("Incorrect!");
+  }
+
+
+};
+
+
+
+// start game 
+
+$("#start-button").on("click", function () {
+
+  displayQuestion();
+  timeLeft();
+
 });
-  
-}
-
-function checkAnswer(){
-if (userAns === tennisQuestions[questionIndex].validAnswer){
-  score++;
-
-}
-else if (userAns !== tennisQuestions[questionIndex].validAnswer){
-  incorrect--;
-};
-
-$("#questions").empty();
-$("#answerOptions").empty();
-clearInterval(inteveralID);
-
-
-var questionValidAns = '';
-if (tennisQuestions[questionIndex].validAnswer === 'a') {
-  questionValidAns = tennisQuestions[questionIndex].answers.a;
-} else if (tennisQuestions[questionIndex].correctAnswer === 'b') {
-  questionValidAns = tennisQuestions[questionIndex].answers.b;
-} else if (tennisQuestions[questionIndex].correctAnswer === 'c') {
-  questionValidAns = tennisQuestions[questionIndex].answers.c;
-} else if (tennisQuestions[questionIndex].correctAnswer === 'd') {
-  questionValidAns = tennisQuestions[questionIndex].answers.d;
-}
-
-if (score > 0) {
-  $("#score").html("Correct!");
-}
-else if (incorrect > 0) {
-  $("#score").html("Incorrect!");
-}
-
-
-};
-
-
-  // start game 
-
-  $("#start-button").on("click", function () {
-    
-
-
-
-    })
-
