@@ -11,7 +11,7 @@
   $(document).ready(function () {
 
     var tennisQuestions = [{
-        question: "How many Grand Slams doeo Rodger Federe have?",
+        question: "How many Grand Slams does Rodger Federe have?",
         answers: [8, 15, 23, 20],
         correct: "3"
       },
@@ -34,7 +34,7 @@
       },
       {
         question: "Where is Novak Djokovic from?",
-        answers: ["Monico", "Serbia", "Bulgaria", "Romania"],
+        answers: ["Monaco", "Serbia", "Bulgaria", "Romania"],
         correct: "1"
       }
     ];
@@ -61,16 +61,17 @@
       $("#question").html(question);
       for (var i = 0; i < 4; i++) {
         var answer = tennisQuestions[indexQandA].answers[i];
-        $("#answer").append('<div class=answerAll id=' + i + '>' + answer + '</div>')
+        $("#answers").append('<input type="radio" name="answerOptions" class=answerAll id=' + i + '>' + answer + '</input>')
+  
       }
-
+      
+    
     }
 
     function timer() {
       if (timeLeft === 0) {
         answered = true;
         clearInterval(intervalID);
-        $("#question").text("THE CORRECT ANSWER IS: " + tennisQuestions[indexQandA].answer[correct]);
       } else if (answered === true) {
         clearInterval(intervalID);
       } else {
@@ -91,7 +92,7 @@
     }
 
     function resetGame() {
-      $("#answersAll").remove();
+      $(".answersAll").remove();
       if (indexQandA < tennisQuestions.length) {
         setTimeout(function () {
           loadQandA();
