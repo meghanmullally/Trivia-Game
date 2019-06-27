@@ -53,7 +53,7 @@
 
     function loadQandA() {
 
-      if (indexQandA === tennisQuestions.length){
+      if (indexQandA === tennisQuestions.length) {
         return resetGame();
       }
 
@@ -105,15 +105,15 @@
 
 
 
-    if (indexQandA <= tennisQuestions.length){
-       // increment indexQandA then loadQandA 
-      indexQandA++
-      loadQandA ();
+      if (indexQandA <= tennisQuestions.length) {
+        // increment indexQandA then loadQandA 
+        indexQandA++
+        loadQandA();
 
-    } else {
-      resetGame();
-    }
-    
+      } else {
+        resetGame();
+      }
+
 
 
     });
@@ -135,7 +135,7 @@
     }
 
 
- //load user and questions after the timer runs out 
+    //load user and questions after the timer runs out 
 
     function resetGame() {
       $(".answersAll").remove();
